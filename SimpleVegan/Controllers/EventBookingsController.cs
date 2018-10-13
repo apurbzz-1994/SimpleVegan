@@ -18,6 +18,7 @@ namespace SimpleVegan.Controllers
         private SimpleVeganContext db = new SimpleVeganContext();
 
         // GET: EventBookings
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             var eventBookings = db.EventBookings.Include(e => e.Event).Include(e => e.Member);
@@ -25,6 +26,7 @@ namespace SimpleVegan.Controllers
         }
 
         // GET: EventBookings/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -50,7 +52,8 @@ namespace SimpleVegan.Controllers
         // POST: EventBookings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-     
+
+        [Authorize]
         public ActionResult Create(int id)
         {
 
@@ -67,11 +70,12 @@ namespace SimpleVegan.Controllers
             db.EventBookings.Add(eventBooking);
             db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Events");
 
         }
 
         // GET: EventBookings/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -107,6 +111,7 @@ namespace SimpleVegan.Controllers
         }
 
         // GET: EventBookings/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -129,7 +134,7 @@ namespace SimpleVegan.Controllers
             EventBooking eventBooking = db.EventBookings.Find(id);
             db.EventBookings.Remove(eventBooking);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Events");
         }
 
         protected override void Dispose(bool disposing)

@@ -24,6 +24,7 @@ namespace SimpleVegan.Controllers
             return View(db.Members.ToList());
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Members/Details/5
         public ActionResult Details(int? id)
         {
@@ -91,6 +92,7 @@ namespace SimpleVegan.Controllers
         }
 
         // GET: Members/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -122,6 +124,7 @@ namespace SimpleVegan.Controllers
         }
 
         // GET: Members/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
