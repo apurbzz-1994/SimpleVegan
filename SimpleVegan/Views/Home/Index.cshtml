@@ -1,31 +1,94 @@
-﻿@{
+﻿@model SimpleVegan.Models.HomePageViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-12">
+        <div class="jumbotron jumbotron-one">
+            <div class="highlights" style="text-align: center;">
+                <h1>Simple Vegan</h1>
+                <p class="lead"><i>"A lively community of vegans helping new-comers to transition to a healthy life..."</i></p>
+                <p><a href="#about_sec" class="btn btn-default btn-lg">Learn more &raquo;</a></p>
+            </div>
+        </div>
     </div>
 </div>
+
+<a id="about_sec"></a>
+<div class="row no-gutter">
+    <div class="col-md-12">
+        <div class="jumbotron jumbotron-about" style="height: 40%">
+            <div style="text-align: center">
+                <h2>About</h2>
+                <p>
+                    Due to the many benefits that stem from consuming a vegan diet, many individuals now-a-days are leaning towards switching to being vegan. A vegan diet is especially helpful for those who are aiming to lose weight or suffers from high blood-pressure. Moreover, quite a few researches suggest that a vegan diet can assist in maintaining healthy blood-sugar levels and can provide protection against certain Cancers.
+                </p>
+                <p>That being said, “Simple Vegan” is a platform supported by a community of vegans that aim to make the transition towards veganism seamless and enjoyable. </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row no-gutter">
+    <div class="col-md-6">
+        <div class="jumbotron jumbotron-two">
+            <div class="highlights">
+                <h1>Vegan Live Events</h1>
+                <p class="lead">Enjoy a weekend attending one of our hands on events, ranging from yoga classes, cook-offs and get-togethers!</p>
+                <p> @Html.ActionLink("Learn More", "Index", "Events", new { area = "" }, new { @class = "btn btn-default btn-lg" })</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="jumbotron jumbotron-event">
+            <div class="highlights-col">
+                <h1>Upcoming Event</h1>
+                @if (Model == null)
+                {
+                    <p class="lead">No new events for now. Stay in touch for futuren events.</p>
+                }
+                else
+                {
+                    <div class="lead">
+                        <p><strong><i>"@Model.latestEvent.Title"</i></strong></p>
+                        <p><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> @Model.latestEvent.EventDate.Day/@Model.latestEvent.EventDate.Month/@Model.latestEvent.EventDate.Year</p>
+                        <p><span class="glyphicon glyphicon-time" aria-hidden="true"></span> @Model.latestEvent.EventDate.TimeOfDay</p>
+                        <p><strong>Venue: </strong>@Model.latestEvent.Venue</p>
+                        <p>@Model.latestEvent.Description</p>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row no-gutter">
+    <div class="col-md-6">
+        <div class="jumbotron jumbotron-blog">
+            <div class="highlights-col">
+                <h1>Latest Blog Post</h1>
+                <div class="lead">
+                    <p><strong>Vegan 101: How to be Vegan</strong></p>
+                    <p>The rise of veganism is prevalent in the current society as supported by [...]</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="jumbotron jumbotron-three">
+            <div class="highlights">
+                <h1>Vegan Community Blog</h1>
+                <p class="lead">A thriving community of vegans sharing their experiences of cooking, travel, lifestyle and health!</p>
+                <p> @Html.ActionLink("Learn More", "Index", "Events", new { area = "" }, new { @class = "btn btn-default btn-lg" })</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

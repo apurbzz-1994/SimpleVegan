@@ -85,7 +85,7 @@ namespace SimpleVegan.Controllers
             {
                 db.Members.Add(member);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(member);

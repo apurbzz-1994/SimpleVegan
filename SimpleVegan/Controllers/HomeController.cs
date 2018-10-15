@@ -3,14 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SimpleVegan.DAL;
+using SimpleVegan.Models;
+using System.Data.Entity;
 
 namespace SimpleVegan.Controllers
 {
     public class HomeController : Controller
     {
+
+        private SimpleVeganContext db = new SimpleVeganContext();
+
         public ActionResult Index()
         {
-            return View();
+            List<Event> allEvent = db.Events.OrderByDescending(x => x.EventDate).ToList();
+
+            var viewModel = new HomePageViewModel {
+                latestEvent = allEvent[allEvent.Count - 1]
+            };
+
+            return View(viewModel);
         }
 
         public ActionResult About()

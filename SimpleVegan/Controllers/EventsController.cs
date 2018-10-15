@@ -18,7 +18,12 @@ namespace SimpleVegan.Controllers
         // GET: Events
         public ActionResult Index()
         {
-            return View(db.Events.ToList());
+            var viewModel = new EventPageViewModel {
+                AllEvents = db.Events.ToList(),
+                AllBookings = db.EventBookings.ToList()
+            };
+
+            return View(viewModel);
         }
 
         // GET: Events/Details/5
@@ -48,8 +53,13 @@ namespace SimpleVegan.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventID,Title,Description,EventDate")] Event @event)
+        public ActionResult Create([Bind(Include = "EventID,Title,Description,Venue,EDate, ETime")] Event @event)
         {
+            @event.EventDate = DateTime.Parse(string.Format("{0} {1}", @event.EDate, @event.ETime));
+
+            ModelState.Clear();
+            TryValidateModel(@event);
+
             if (ModelState.IsValid)
             {
                 db.Events.Add(@event);
@@ -81,8 +91,13 @@ namespace SimpleVegan.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventID,Title,Description,EventDate")] Event @event)
+        public ActionResult Edit([Bind(Include = "EventID,Title,Description,Venue,EDate,ETime")] Event @event)
         {
+            @event.EventDate = DateTime.Parse(string.Format("{0} {1}", @event.EDate, @event.ETime));
+
+            ModelState.Clear();
+            TryValidateModel(@event);
+
             if (ModelState.IsValid)
             {
                 db.Entry(@event).State = EntityState.Modified;

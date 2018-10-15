@@ -1,90 +1,119 @@
-﻿@model IEnumerable<SimpleVegan.Models.Event>
+﻿@model SimpleVegan.Models.EventPageViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Events";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using Microsoft.AspNet.Identity;
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EventDate)
-        </th>
-        <th></th>
-    </tr>
-
-
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventDate)
-            </td>
-            <td>
-                @{
-
-                    //checking to see if user has already registered to this event
-                    ICollection<SimpleVegan.Models.EventBooking> eventList = item.Bookings;
-
-                    var numberOfAttendees = eventList.Count;
-
-
-                    //returns true if logged in user is going to the event
-                    //bool alreadyBooked = eventList.Any(a => string.Equals(a.Member.userId, User.Identity.GetUserId()));
-                    var alreadyBooked = eventList.SingleOrDefault(a => string.Equals(a.Member.userId, User.Identity.GetUserId()));
-                }
-
-
-                <p style="color: blue">Going: @numberOfAttendees</p>
-
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron jumbotron-two">
+            <div class="highlights" style="text-align: center;">
+                <h1>Events</h1>
+                <p>
+                    <i>“To achieve great things, two things are needed: a plan and not quite enough time.” – Leonard Bernstein</i>
+                </p>
                 @if (User.IsInRole("Admin"))
                 {
-                    @Html.ActionLink("Edit |", "Edit", new { id = item.EventID }) 
-                    @Html.ActionLink("Details |", "Details", new { id = item.EventID }) 
-                    @Html.ActionLink("Delete |", "Delete", new { id = item.EventID }) 
+                    <p> @Html.ActionLink("Create Event", "Create", "Events", new { area = "" }, new { @class = "btn btn-default btn-lg" })</p>
                 }
+            </div>
+        </div>
+    </div>
+</div>
 
 
-                @if (User.Identity.IsAuthenticated)
-                {
-                    if (alreadyBooked != null)
-                    {
-                        <span style="color: red">Registered |</span>
-                        @Html.ActionLink("Not Going!", "Delete", "EventBookings", new { id = alreadyBooked.EventBookingID }, null)
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Going!", "Create", "EventBookings", new { id = item.EventID }, null)
-                    }
-                }
-                else {
-                    <p style="color: blueviolet">Login to attend</p>
-                }
-
-
-
-            </td>
-        </tr>
+@foreach (var item in Model.AllEvents)
+{
+    string colorClass = "jumbotron-blog";
+    if (item.EventID % 2 == 0) {
+        colorClass = "jumbotron-event";
+    }
+    else {
+        colorClass = "jumbotron-blog";
     }
 
-</table>
+  <div class="row no-gutter">
+        <div class="col-md-12">
+            <div class= "jumbotron @colorClass" style="height: 30%;">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2> @Html.DisplayFor(modelItem => item.Title)</h2>
+                            <p><strong>Venue: </strong> @item.Venue</p>
+                            <p><strong><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></strong> @item.EventDate.Day/@item.EventDate.Month/@item.EventDate.Year</p>
+                            <p><strong><span class="glyphicon glyphicon-time" aria-hidden="true"></span></strong> @item.EventDate.TimeOfDay</p>
+                        </div>
+                        <div class="col-md-6" style="text-align: right;">
+                            @{
+                                //checking to see if user has already registered to this event
+                                ICollection<SimpleVegan.Models.EventBooking> eventList = item.Bookings;
+
+                                var numberOfAttendees = eventList.Count;
+
+                                var ClashEvents = new List<string>();
+
+                                foreach (var a in Model.AllBookings)
+                                {
+                                    if (string.Equals(a.Member.userId, User.Identity.GetUserId()) && string.Equals(a.Event.EDate, item.EDate) && string.Equals(a.Event.ETime, item.ETime) && !string.Equals(a.Event.EventID, item.EventID))
+                                    {
+                                        ClashEvents.Add(a.Event.Title);
+                                    }
+                                }
+
+
+                                //returns true if logged in user is going to the event
+                                //bool alreadyBooked = eventList.Any(a => string.Equals(a.Member.userId, User.Identity.GetUserId()));
+                                var alreadyBooked = eventList.SingleOrDefault(a => string.Equals(a.Member.userId, User.Identity.GetUserId()));
+                            }
+                            <p>Going: @numberOfAttendees</p>
+                            <p class="lead">"@item.Description"</p>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Edit |", "Edit", new { id = item.EventID })
+                                @Html.ActionLink("Details |", "Details", new { id = item.EventID })
+                                @Html.ActionLink("Delete |", "Delete", new { id = item.EventID })
+                            }
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+
+                                if (ClashEvents.Count == 0)
+                                {
+                                    //no event clashes were there
+                                    if (alreadyBooked != null)
+                                    {
+                                        <p><span class="glyphicon glyphicon-ok white" aria-hidden="true"></span> Registered!</p>
+                                        <p>@Html.ActionLink("Not Going!", "Delete", "EventBookings", new { id = alreadyBooked.EventBookingID }, new { @class = "btn btn-default btn-lg" })</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@Html.ActionLink("Going!", "Create", "EventBookings", new { id = item.EventID }, new { @class = "btn btn-default btn-lg" })</p>
+                                    }
+
+                                }
+                                else
+                                {
+                                    string ClashString = String.Join(",", ClashEvents);
+                                    
+                                    <p style="color: white">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> This event clashes with: @ClashString
+                                    </p>
+                                }
+
+
+                            }
+                            else
+                            {
+                                <p style="color: white"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Login to attend</p>
+                            }
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+}
+
+

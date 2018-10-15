@@ -163,6 +163,7 @@ namespace SimpleVegan.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    //Apurba's note: Reroute so that user can be registered in both database tables.
                     return RedirectToAction("Create", "Members");
                 }
                 AddErrors(result);

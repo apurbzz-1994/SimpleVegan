@@ -22,3 +22,119 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*custom css for tiles*/
+.jumbotron-one {
+    background-image: url("/Content/Images/home_img.jpg");
+    background-color: #17234E;
+    margin-bottom: 0;
+    min-height: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    height: 600px;
+}
+
+
+.jumbotron-two {
+    background-image: url("/Content/Images/events.jpg");
+    background-color: #17234E;
+    margin-bottom: 0;
+    min-height: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    height: 600px;
+}
+
+.jumbotron-three {
+    background-image: url("/Content/Images/blog.jpg");
+    background-color: #17234E;
+    margin-bottom: 0;
+    min-height: 50%;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: cover;
+    background-attachment: fixed;
+    color: white;
+    height: 600px;
+}
+
+.jumbotron-event {
+    background-color: deeppink;
+    margin-bottom: 0;
+    min-height: 50%;
+    background-attachment: fixed;
+    color: white;
+    height: 600px;
+}
+
+.jumbotron-blog {
+    background-color: black;
+    margin-bottom: 0;
+    min-height: 50%;
+    background-attachment: fixed;
+    color: white;
+    height: 600px;
+}
+
+
+.jumbotron-about {
+    background-color: #404144;
+    margin-bottom: 0;
+    min-height: 50%;
+    background-attachment: fixed;
+    color: white;
+    height: 400px;
+}
+
+/*removes gutter from two bootstrap cells*/
+.no-gutter {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.no-gutter > [class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+
+/*changing navbar colours*/
+.navbar-inverse {
+    background-color: #231321;
+    border-color: #231321;
+}
+
+.highlights {
+    margin-top: 130px;
+    background-color: rgb(128, 128, 128, 0.5);
+    padding: 10px;
+}
+
+.highlights-col {
+    margin-top: 130px;
+    padding: 10px;
+}
+
+.highlights-event {
+    padding: 10px;
+}
+
+.white, .white a {
+    color: #fff;
+}
+
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #D26C73;
+}
+
+.navbar-inverse .navbar-brand {
+        color: #D26C73;
+}
+
