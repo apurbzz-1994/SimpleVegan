@@ -1,0 +1,95 @@
+﻿@model IEnumerable<SimpleVegan.Models.BlogPost>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Microsoft.AspNet.Identity;
+
+<body style="background-color:#eaedf2;">
+</body>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron jumbotron-three">
+            <div class="highlights" style="text-align: center;">
+                <h1>Community Blog</h1>
+                <p>
+                    <i>“There is no greater agony than bearing an untold story inside you.” – Maya Angelou, I Know Why the Caged Bird Sings</i>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{ 
+    //keeps count of colour change
+    var count = 0;
+}
+
+@foreach (var item in Model)
+{
+
+    string backColor = "deeppink";
+    if (count % 2 == 0)
+    {
+        backColor = "black";
+    }
+    else
+    {
+        backColor = "deeppink";
+    }
+    <div class="row no-gutter" style="margin-top: 30px; margin:5%; height: 50%; display: table;">
+        <div class="col-md-2" style="background-color: @backColor; color: white; padding: 10px; display: table-cell; float: none;
+        vertical-align: top;">
+            <h2> @Html.DisplayFor(modelItem => item.Member.FirstName)</h2>
+            @{ 
+                var numDays = Math.Round((DateTime.Now - item.Dop).TotalDays);
+                var numHours = Math.Round((DateTime.Now - item.Dop).TotalHours);
+                var numMinutes = Math.Round((DateTime.Now - item.Dop).TotalMinutes);
+
+            }
+            
+            @if (numDays < 1)
+            {
+                if (numHours < 1)
+                {
+                    <p>@numMinutes minute(s) ago.</p>
+                }
+                else
+                {
+                    <p>@numHours hour(s) ago.</p>
+                }
+            }
+            else
+            {
+                <p>@numDays day(s) ago</p>
+            }
+            <p> @item.Dop.Day/@item.Dop.Month/@item.Dop.Year </p>
+        </div>
+        <div class="col-md-10 row-eq-height" style="padding-left: 10px; background-color: white; display: table-cell; float: none;
+        vertical-align: top;">
+            <h3> @Html.DisplayFor(modelItem => item.Title)</h3>
+            @{
+                //only displays a substring of the entire article
+                var partText = item.Body.Substring(0, Math.Min(item.Body.Length, 300));
+
+            }
+            <h4 style="line-height:1.3;">@partText ...@Html.ActionLink("Read More", "Details", new { id = item.BlogPostID })</h4>
+
+            @if (string.Equals(User.Identity.GetUserId(), item.Member.userId) || User.IsInRole("Admin"))
+            {
+                <p>
+                    <hr/>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BlogPostID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BlogPostID })
+                </p>
+            }
+        </div>
+    </div>
+
+                    count = count + 1;
+
+ }
+

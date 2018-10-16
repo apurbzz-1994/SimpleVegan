@@ -195,6 +195,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BlogPostsController.cs" />
     <Compile Include="Controllers\EventBookingsController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -206,6 +207,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\EventBooking.cs" />
     <Compile Include="Models\EventPageViewModel.cs" />
@@ -341,6 +343,11 @@
     <Content Include="Views\EventBookings\Details.cshtml" />
     <Content Include="Views\EventBookings\Edit.cshtml" />
     <Content Include="Views\EventBookings\Index.cshtml" />
+    <Content Include="Views\BlogPosts\Create.cshtml" />
+    <Content Include="Views\BlogPosts\Delete.cshtml" />
+    <Content Include="Views\BlogPosts\Details.cshtml" />
+    <Content Include="Views\BlogPosts\Edit.cshtml" />
+    <Content Include="Views\BlogPosts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

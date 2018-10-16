@@ -24,11 +24,15 @@
     </div>
 </div>
 
+@{ 
+    //keeping track of colour changes
+    var count = 0;
+}
 
 @foreach (var item in Model.AllEvents)
 {
     string colorClass = "jumbotron-blog";
-    if (item.EventID % 2 == 0)
+    if (count%2 == 0)
     {
         colorClass = "jumbotron-event";
     }
@@ -118,7 +122,9 @@
             </div>
         </div>
     </div>
-}
+
+     count = count + 1;
+ }
 
 <!--This is the modal message-->
 <!-- Modal -->

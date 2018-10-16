@@ -18,5 +18,7 @@ namespace SimpleVegan.Models
         public string userId { get; set; }
 
         public virtual ICollection<EventBooking> Bookings { get; set; }
+
+        public virtual ICollection<BlogPost> BlogPosts { get; set; }
     }
 }

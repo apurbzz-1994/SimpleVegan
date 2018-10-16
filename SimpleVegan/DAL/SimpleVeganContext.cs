@@ -13,6 +13,7 @@ namespace SimpleVegan.DAL
         public DbSet<Member> Members { get; set; }
         public DbSet<EventBooking> EventBookings { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
