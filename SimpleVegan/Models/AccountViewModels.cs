@@ -82,8 +82,10 @@ namespace SimpleVegan.Models
 
         //Added to go into the Member table
         [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
     }
 

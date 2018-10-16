@@ -53,7 +53,7 @@ namespace SimpleVegan.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventID,Title,Description,Venue,EDate, ETime")] Event @event)
+        public ActionResult Create([Bind(Include = "EventID,Title,Description,Venue,EDate,ETime,Duration")] Event @event)
         {
             @event.EventDate = DateTime.Parse(string.Format("{0} {1}", @event.EDate, @event.ETime));
 
@@ -91,7 +91,7 @@ namespace SimpleVegan.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventID,Title,Description,Venue,EDate,ETime")] Event @event)
+        public ActionResult Edit([Bind(Include = "EventID,Title,Description,Venue,EDate,ETime,Duration")] Event @event)
         {
             @event.EventDate = DateTime.Parse(string.Format("{0} {1}", @event.EDate, @event.ETime));
 
