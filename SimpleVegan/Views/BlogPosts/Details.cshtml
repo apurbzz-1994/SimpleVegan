@@ -40,7 +40,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Body)
+            @*Html.DisplayFor(model => model.Body)*@
+            @Html.Raw(Model.Body)
         </dd>
 
     </dl>
@@ -49,3 +50,12 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.BlogPostID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
+}

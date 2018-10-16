@@ -73,10 +73,13 @@
             <h3> @Html.DisplayFor(modelItem => item.Title)</h3>
             @{
                 //only displays a substring of the entire article
-                var partText = item.Body.Substring(0, Math.Min(item.Body.Length, 300));
+                var htmlPartText = Html.Raw(item.Body).ToHtmlString();
+                
+                var partText = htmlPartText.Substring(0, Math.Min(item.Body.Length, 700));
+                var htmlPureText = MvcHtmlString.Create(partText);
 
             }
-            <h4 style="line-height:1.3;">@partText ...@Html.ActionLink("Read More", "Details", new { id = item.BlogPostID })</h4>
+            <h4 style="line-height:1.3;">@htmlPureText ...@Html.ActionLink("Read More", "Details", new { id = item.BlogPostID })</h4>
 
             @if (string.Equals(User.Identity.GetUserId(), item.Member.userId) || User.IsInRole("Admin"))
             {

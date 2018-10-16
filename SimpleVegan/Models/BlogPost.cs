@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace SimpleVegan.Models
 {
@@ -16,6 +17,7 @@ namespace SimpleVegan.Models
         public string Title { get; set; }
         [Required]
         public DateTime Dop { get; set; }
+        [AllowHtml]
         public string Body { get; set; }
 
         public virtual Member Member { get; set; }

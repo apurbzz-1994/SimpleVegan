@@ -41,12 +41,14 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Body)
+            @*Html.DisplayFor(model => model.Body)*@
+            @Html.Raw(Model.Body);
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
@@ -55,3 +57,12 @@
         </div>
     }
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+    </script>
+}
