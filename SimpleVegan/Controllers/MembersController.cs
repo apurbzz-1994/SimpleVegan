@@ -16,12 +16,14 @@ namespace SimpleVegan.Controllers
     {
         private SimpleVeganContext db = new SimpleVeganContext();
 
+        
 
         [Authorize(Roles = "Admin")]
         // GET: Members
         public ActionResult Index()
         {
             return View(db.Members.ToList());
+
         }
 
         [Authorize(Roles = "Admin")]

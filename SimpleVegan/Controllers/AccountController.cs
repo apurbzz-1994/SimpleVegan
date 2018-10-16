@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SimpleVegan.Models;
+using SimpleVegan.DAL;
 
 namespace SimpleVegan.Controllers
 {
@@ -17,6 +18,9 @@ namespace SimpleVegan.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        //Apurba's note: For accessing the members table
+        private SimpleVeganContext db = new SimpleVeganContext();
 
         public AccountController()
         {
@@ -156,15 +160,26 @@ namespace SimpleVegan.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    //Apurba's note: Reroute so that user can be registered in both database tables.
-                    return RedirectToAction("Create", "Members");
+                    //Apurba's note: Make sure FirstName and LastName goes inside the Members table
+                    Member NewMember = new Member() {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        userId = user.Id
+                    };
+
+                    TryValidateModel(NewMember);
+
+                    //add to database
+                    db.Members.Add(NewMember);
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
