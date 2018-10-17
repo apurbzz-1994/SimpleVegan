@@ -20,7 +20,8 @@ namespace SimpleVegan.Controllers
         public ActionResult Index()
         {
             var blogPosts = db.BlogPosts.Include(b => b.Member);
-            return View(blogPosts.ToList());
+            //latest blog post needs to appear first.
+            return View(blogPosts.OrderByDescending(x => x.Dop).ToList());
         }
 
         // GET: BlogPosts/Details/5
