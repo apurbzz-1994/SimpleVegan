@@ -44,7 +44,7 @@
     {
         backColor = "deeppink";
     }
-    <div class="row no-gutter" style="margin-top: 30px; margin:5%; height: 50%; display: table;">
+    <div class="row" style="margin-top: 30px; margin:5%; height: 50%; display: flex;">
         <div class="col-md-2" style="background-color: @backColor; color: white; padding: 10px; display: table-cell; float: none;
         vertical-align: top;">
             <h2> @Html.DisplayFor(modelItem => item.Member.FirstName)</h2>
@@ -77,18 +77,26 @@
             <h3> @Html.DisplayFor(modelItem => item.Title)</h3>
             @{
                 //only displays a substring of the entire article
-                var htmlPartText = Html.Raw(item.Body).ToHtmlString();
-                
-                var partText = htmlPartText.Substring(0, Math.Min(item.Body.Length, 700));
-                var htmlPureText = MvcHtmlString.Create(partText);
+                var htmlPartText = Html.Raw(item.Body).ToString();
+                var partText = " ";
+
+                if (!string.IsNullOrEmpty(htmlPartText)) {
+                    //using regex to remove html tags from text
+                    var extractedText = htmlPartText.Replace("<br />", Environment.NewLine);
+                    extractedText = System.Text.RegularExpressions.Regex.Replace(extractedText, "<.*?>", string.Empty);
+
+
+                    partText = extractedText.Substring(0, Math.Min(extractedText.Length, 400));
+
+                }
 
             }
-            <h4 style="line-height:1.3;">@htmlPureText ...@Html.ActionLink("Read More", "Details", new { id = item.BlogPostID })</h4>
+            <h4 style="line-height:1.3;">@partText ...@Html.ActionLink("Read More", "Details", new { id = item.BlogPostID })</h4>
 
             @if (string.Equals(User.Identity.GetUserId(), item.Member.userId) || User.IsInRole("Admin"))
             {
                 <p>
-                    <hr/>
+                    <hr style="border-color:silver; border-style:dashed;" />
                     @Html.ActionLink("Edit", "Edit", new { id = item.BlogPostID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.BlogPostID })
                 </p>
