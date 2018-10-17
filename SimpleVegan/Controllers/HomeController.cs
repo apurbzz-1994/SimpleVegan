@@ -17,9 +17,11 @@ namespace SimpleVegan.Controllers
         public ActionResult Index()
         {
             List<Event> allEvent = db.Events.OrderByDescending(x => x.EventDate).ToList();
+            List<BlogPost> allPost = db.BlogPosts.OrderByDescending(x => x.Dop).ToList();
 
             var viewModel = new HomePageViewModel {
-                latestEvent = allEvent[allEvent.Count - 1]
+                latestEvent = allEvent[allEvent.Count - 1],
+               latestPost = allPost[0]
             };
 
             return View(viewModel);

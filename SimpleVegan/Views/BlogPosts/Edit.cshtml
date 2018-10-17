@@ -5,7 +5,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron" style="background-color: deeppink; color: white;">
+            <div style="text-align: center;">
+                <h1>Edit Your Blog</h1>
+                <p>
+                    <i>“Blogging is to writing what extreme sports are to athletics: more free-form, more accident-prone, less formal, more alive. It is, in many ways, writing out loud.” – Andrew Sullivan</i>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @using (Html.BeginForm())
@@ -13,7 +25,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>BlogPost</h4>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.BlogPostID)
@@ -36,15 +48,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save Changes" class="btn btn-default" />
+                @Html.ActionLink("Back to Blogs", "Index", null, new { @class = "btn btn-default" })
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

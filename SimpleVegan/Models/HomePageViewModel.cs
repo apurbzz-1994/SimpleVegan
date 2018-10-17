@@ -10,6 +10,6 @@ namespace SimpleVegan.Models
         public Event latestEvent { get; set; }
 
         //will add a second property when blogpost is there
-        //public BlogPost latestPost { get; set; }
+        public BlogPost latestPost { get; set; }
     }
 }

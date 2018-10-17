@@ -73,8 +73,11 @@
             <div class="highlights-col">
                 <h1>Latest Blog Post</h1>
                 <div class="lead">
-                    <p><strong>Vegan 101: How to be Vegan</strong></p>
-                    <p>The rise of veganism is prevalent in the current society as supported by [...]</p>
+                    <p><strong>@Model.latestPost.Title</strong></p>
+                    <p><i>-By @Model.latestPost.Member.FirstName @Model.latestPost.Member.LastName</i></p>
+
+                    
+                    <p>@Html.ActionLink("Read", "Details", "BlogPosts", new { id = Model.latestPost.BlogPostID }, new { @class="btn btn-default btn-lg"})</p>
                 </div>
             </div>
         </div>

@@ -5,57 +5,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+@using Microsoft.AspNet.Identity;
 
-<div>
-    <h4>BlogPost</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Member.FirstName)
-        </dt>
+<body style="background-color:#eaedf2;">
 
-        <dd>
-            @Html.DisplayFor(model => model.Member.FirstName)
-        </dd>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron" style="background-color: deeppink; color: white;">
+                <div style="text-align: center;">
+                    <h1>@Model.Title</h1>
+                    <p>
+                        <i>A blog by @Model.Member.FirstName @Model.Member.LastName</i>
+                    </p>
+                    <p>Posted on @Model.Dop</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+    <div style="margin: 0 5% 5% 5%; padding: 15px; background-color: white;">
+        @Html.Raw(Model.Body)
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Dop)
-        </dt>
+    <div class="col-md-offset-5 col-md-7" style="margin-bottom: 70px;">
+        @if (string.Equals(User.Identity.GetUserId(), Model.Member.userId))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.BlogPostID }, new { @class = "btn btn-default" })
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Dop)
-        </dd>
+        @Html.ActionLink("Back to Blog", "Index", null, new { @class = "btn btn-default" })
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>
 
-        <dd>
-            @*Html.DisplayFor(model => model.Body)*@
-            @Html.Raw(Model.Body)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BlogPostID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        tinymce.init({
-            selector: '#mytextarea'
-        });
-    </script>
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            tinymce.init({
+                selector: '#mytextarea'
+            });
+        </script>
+    }
