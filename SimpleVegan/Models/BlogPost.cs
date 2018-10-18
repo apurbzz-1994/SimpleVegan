@@ -21,5 +21,6 @@ namespace SimpleVegan.Models
         public string Body { get; set; }
 
         public virtual Member Member { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

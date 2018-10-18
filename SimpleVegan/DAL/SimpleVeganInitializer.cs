@@ -32,6 +32,14 @@ namespace SimpleVegan.DAL
 
             members.ForEach(m => context.Members.Add(m));
             context.SaveChanges();
+
+            var blogposts = new List<BlogPost>
+            {
+                new BlogPost{ MemberID = 1, Title="I am hungry", Body="This is some text", Dop = DateTime.Parse("2018-12-10") }
+            };
+
+            blogposts.ForEach(m => context.BlogPosts.Add(m));
+            context.SaveChanges();
         }
 
             
