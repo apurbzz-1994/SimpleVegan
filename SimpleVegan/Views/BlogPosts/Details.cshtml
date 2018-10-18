@@ -83,7 +83,7 @@
                 // Create a function that the hub can call back to display messages.
                 toDo.client.addNewMessageToPage = function (name, message) {
                     // Add the message to the page.
-                    $('#discussion').append("<li class='list-group-item' style='margin - top: 10px;'><p><strong>" + htmlEncode(name)
+                    $('#discussion').append("<li class='list-group-item' style='margin-top: 10px;'><p><strong>" + htmlEncode(name)
                         + ' says</p><p></strong>' + htmlEncode(message) + '</p></li>');
                 };
                 // Start the connection.

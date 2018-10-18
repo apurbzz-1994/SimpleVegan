@@ -80,7 +80,8 @@
                 var htmlPartText = Html.Raw(item.Body).ToString();
                 var partText = " ";
 
-                if (!string.IsNullOrEmpty(htmlPartText)) {
+                if (!string.IsNullOrEmpty(htmlPartText))
+                {
                     //using regex to remove html tags from text
                     var extractedText = htmlPartText.Replace("<br />", Environment.NewLine);
                     extractedText = System.Text.RegularExpressions.Regex.Replace(extractedText, "<.*?>", string.Empty);
@@ -92,11 +93,12 @@
 
             }
             <h4 style="line-height:1.3;">@partText ...@Html.ActionLink("Read More", "Details", new { id = item.BlogPostID })</h4>
+            <hr style="border-color:silver; border-style:dashed;" />
+            <h4 style="text-align: right;"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @item.Comments.ToList().Count</h4>
 
             @if (string.Equals(User.Identity.GetUserId(), item.Member.userId) || User.IsInRole("Admin"))
             {
                 <p>
-                    <hr style="border-color:silver; border-style:dashed;" />
                     @Html.ActionLink("Edit", "Edit", new { id = item.BlogPostID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.BlogPostID })
                 </p>

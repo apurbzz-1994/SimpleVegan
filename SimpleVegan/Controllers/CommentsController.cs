@@ -17,6 +17,7 @@ namespace SimpleVegan.Controllers
 
         private SimpleVeganContext db = new SimpleVeganContext();
 
+
         [HttpPost]
         public ActionResult Create(string bid, string message, string mid)
         {
@@ -39,6 +40,14 @@ namespace SimpleVegan.Controllers
             }
 
             return Json("An error has occured");
+        }
+
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Comment c = db.Comments.Find(id);
+            db.Comments.Remove(c);
+            db.SaveChanges();
+            return RedirectToAction("Details", "BlogPosts", new { id = c.BlogPostID});
         }
     }
 }
