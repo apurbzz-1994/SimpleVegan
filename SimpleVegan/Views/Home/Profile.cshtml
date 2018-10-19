@@ -1,0 +1,159 @@
+﻿@model SimpleVegan.Models.ProfileViewModel
+@using Microsoft.AspNet.Identity;
+
+@{
+    var userName = Model.MyName;
+    ViewBag.Title = userName + " | " + "Profile";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron" style="background-color: deeppink; color: white;">
+            <div style="text-align: center;">
+                <h1>@userName's Profile</h1>
+                <h1>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    //keeps count of colour change
+    var count = 0;
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Your Blog Posts</h3>
+
+        @if (Model.MyBlogs.Count() == 0)
+        {
+            <div class="alert alert-info">You haven't written any blogs!  
+            <p>@Html.ActionLink("Post a blog", "Create", "BlogPosts")</p></div>
+        }
+
+        @foreach (var item in Model.MyBlogs)
+        {
+
+            string backColor = "deeppink";
+            if (count % 2 == 0)
+            {
+                backColor = "black";
+            }
+            else
+            {
+                backColor = "deeppink";
+            }
+            <div class="row" style="margin-top: 30px; margin:5%; height: 50%; display: flex;">
+                <div class="col-md-2" style="background-color: @backColor; color: white; padding: 10px; display: table-cell; float: none;
+        vertical-align: top;">
+                    <h2> @Html.DisplayFor(modelItem => item.Member.FirstName)</h2>
+                    @{
+                        var numDays = Math.Round((DateTime.Now - item.Dop).TotalDays);
+                        var numHours = Math.Round((DateTime.Now - item.Dop).TotalHours);
+                        var numMinutes = Math.Round((DateTime.Now - item.Dop).TotalMinutes);
+
+                    }
+
+                    @if (numDays < 1)
+                    {
+                        if (numHours < 1)
+                        {
+                            <p>@numMinutes minute(s) ago.</p>
+                        }
+                        else
+                        {
+                            <p>@numHours hour(s) ago.</p>
+                        }
+                    }
+                    else
+                    {
+                        <p>@numDays day(s) ago</p>
+                    }
+                    <p> @item.Dop.Day/@item.Dop.Month/@item.Dop.Year </p>
+                </div>
+                <div class="col-md-10 row-eq-height" style="padding-left: 10px; background-color: white; display: table-cell; float: none;
+        vertical-align: top;">
+                    <h3> @Html.DisplayFor(modelItem => item.Title)</h3>
+                    @{
+                        //only displays a substring of the entire article
+                        var htmlPartText = Html.Raw(item.Body).ToString();
+                        var partText = " ";
+
+                        if (!string.IsNullOrEmpty(htmlPartText))
+                        {
+                            //using regex to remove html tags from text
+                            var extractedText = htmlPartText.Replace("<br />", Environment.NewLine);
+                            extractedText = System.Text.RegularExpressions.Regex.Replace(extractedText, "<.*?>", string.Empty);
+
+
+                            partText = extractedText.Substring(0, Math.Min(extractedText.Length, 400));
+
+                        }
+
+                    }
+                    <h4 style="line-height:1.3;">@partText ...@Html.ActionLink("Read More", "Details", "BlogPosts", new { id = item.BlogPostID }, null)</h4>
+                    <hr style="border-color:silver; border-style:dashed;" />
+                    <h4 style="text-align: right;"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> @item.Comments.ToList().Count</h4>
+
+                    @if (string.Equals(User.Identity.GetUserId(), item.Member.userId) || User.IsInRole("Admin"))
+                    {
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", "BlogPosts", new { id = item.BlogPostID }, null) |
+                            @Html.ActionLink("Delete", "Delete", "BlogPosts", new { id = item.BlogPostID }, null)
+                        </p>
+                    }
+                </div>
+            </div>
+
+            count = count + 1;
+
+        }
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Events you're attending</h3>
+        @if (Model.MyBookings.Count() == 0) {
+            <div class="alert alert-info">You don't have any events booked! 
+                <p>@Html.ActionLink("Book an Event", "Index", "Events")</p></div>
+        }
+            <ul class="list-group">
+                @foreach (var item in Model.MyBookings)
+                {
+                <li class="list-group-item">
+                    <h4>@item.Event.Title</h4>
+                    <p>@item.Event.Description</p>
+                    <p><strong>Venue: </strong> @item.Event.Venue</p>
+                    <p><strong><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></strong> @item.Event.EventDate.Day/@item.Event.EventDate.Month/@item.Event.EventDate.Year</p>
+                    <p><strong><span class="glyphicon glyphicon-time" aria-hidden="true"></span></strong> @item.Event.EventDate.ToString("hh:mm tt", System.Globalization.CultureInfo.InvariantCulture)</p>
+                </li>
+                }
+            </ul>
+ 
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>Your Comments</h3>
+        @if (Model.MyComments.Count() == 0)
+        {
+            <div class="alert alert-info">You haven't made any!</div>
+        }
+        <ul class="list-group">
+            @foreach (var item in Model.MyComments) {
+                <li class="list-group-item">
+                    <p><strong>@item.BlogPost.Title -by @item.BlogPost.Member.FirstName</strong></p>
+                    <p>Comment: "@item.Body"</p>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+

@@ -21,7 +21,7 @@ namespace SimpleVegan.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var eventBookings = db.EventBookings.Include(e => e.Event).Include(e => e.Member);
+            var eventBookings = db.Events.ToList();
             return View(eventBookings.ToList());
         }
 

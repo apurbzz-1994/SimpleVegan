@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SimpleVegan.DAL;
 using SimpleVegan.Models;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
 
 namespace SimpleVegan.Controllers
 {
@@ -27,16 +28,20 @@ namespace SimpleVegan.Controllers
             return View(viewModel);
         }
 
-        public ActionResult About()
+        public ActionResult Profile()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            var userCred = User.Identity.GetUserId();
+            var viewModel = new ProfileViewModel {
+                MyBlogs = db.BlogPosts.ToList().Where(m => string.Equals(m.Member.userId, User.Identity.GetUserId())),
+                MyBookings = db.EventBookings.ToList().Where(m => string.Equals(m.Member.userId, User.Identity.GetUserId())),
+                MyComments = db.Comments.ToList().Where(m => string.Equals(m.CommenterId, User.Identity.GetUserId())),
+                MyName = db.Members.SingleOrDefault(m => string.Equals(m.userId, userCred)).FirstName
+            };
+            return View(viewModel);
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }

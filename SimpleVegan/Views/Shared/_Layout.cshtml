@@ -23,9 +23,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Profile", "Profile", "Home")</li>
+                    }
                     <li>@Html.ActionLink("Events", "Index", "Events")</li>
                     <li>@Html.ActionLink("Blog", "Index", "BlogPosts")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="dropdown">
