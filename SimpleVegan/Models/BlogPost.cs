@@ -13,7 +13,7 @@ namespace SimpleVegan.Models
         [Required]
         public int BlogPostID { get; set; }
         public int MemberID { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Please add a title for your blog.")]
         public string Title { get; set; }
         [Required]
         public DateTime Dop { get; set; }

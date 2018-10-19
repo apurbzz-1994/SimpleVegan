@@ -48,12 +48,12 @@ namespace SimpleVegan.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="A valid email is required for login.")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Password is required for login.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -64,12 +64,12 @@ namespace SimpleVegan.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="A valid email address is required for registration.")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="A valid password is required for your account.")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -81,10 +81,10 @@ namespace SimpleVegan.Models
         public string ConfirmPassword { get; set; }
 
         //Added to go into the Member table
-        [Required]
+        [Required(ErrorMessage ="Your first name is required for your account.")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Your last name is required for your account.")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
     }

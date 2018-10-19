@@ -13,11 +13,11 @@ namespace SimpleVegan.Models
         [Required(ErrorMessage = "Your Event requires a title.")]
         public string Title { get; set; }
         public string Description { get; set; }
-        [Required(ErrorMessage = "Provide a venue for your guests.")]
+        [Required(ErrorMessage ="Please provide the destination venue for your guests to know.")]
         public string Venue { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Please add the date of vegan event.")]
         public string EDate { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Please enter a valid time for event")]
         public string ETime { get; set; }
         [Required]
         public DateTime EventDate { get; set; }
