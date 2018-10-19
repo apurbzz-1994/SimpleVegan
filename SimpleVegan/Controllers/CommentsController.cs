@@ -28,7 +28,8 @@ namespace SimpleVegan.Controllers
                 BlogPostID = Convert.ToInt32(bid),
                 Body = message,
                 dop = DateTime.Now,
-                CommenterName = commenterId.FirstName
+                CommenterName = commenterId.FirstName,
+                CommenterId = mid
                 
             };
 

@@ -58,14 +58,20 @@
                     <li class="list-group-item" style="margin-top:10px;">
                         <p><strong>@item.CommenterName says</strong></p>
                         <p>@item.Body</p>
+                        <p style="text-align: right;">
+                            @if (string.Equals(User.Identity.GetUserId(), item.CommenterId))
+                            {
+                                //show delete link
+                                <a href="/Comments/DeleteConfirmed/@item.CommentID" class="btn btn-default">Delete</a>
+                            }
+                        </p>
+
                     </li>
 
                 }
             }
         </ul>
     </div>
-
-
 
 
     @section Scripts {
@@ -83,8 +89,9 @@
                 // Create a function that the hub can call back to display messages.
                 toDo.client.addNewMessageToPage = function (name, message) {
                     // Add the message to the page.
+
                     $('#discussion').append("<li class='list-group-item' style='margin-top: 10px;'><p><strong>" + htmlEncode(name)
-                        + ' says</p><p></strong>' + htmlEncode(message) + '</p></li>');
+                        + ' says</p></strong><p>' + htmlEncode(message) + "</p><p style='text-align:right;'><button class='btn btn-default' id='delete -c'>Delete</button></p></li>");
                 };
                 // Start the connection.
                 $.connection.hub.start().done(function () {
@@ -125,6 +132,8 @@
                         // Clear text box and reset focus for next comment.
                         $('#message').val('');
                     });
+
+                    //sonething else
                 });
             });
             // This optional function html-encodes messages for display in the page.

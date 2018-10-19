@@ -12,6 +12,7 @@ namespace SimpleVegan.Models
         public int CommentID { get; set; }
         public int BlogPostID { get; set; }
         public string CommenterName { get; set; }
+        public string CommenterId { get; set; }
         public DateTime dop { get; set; }
         public string Body { get; set; }
 
