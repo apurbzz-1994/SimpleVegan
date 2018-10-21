@@ -51,22 +51,47 @@
         }
 
         <h4 style="color: deeppink; margin-top: 40px;">Comments</h4>
+        @if (!User.Identity.IsAuthenticated) {
+            <p class="alert alert-info">Please login to add a comment.</p>
+        }
         <ul id="discussion" class="list-group">
             @{
                 foreach (var item in Model.Comments)
                 {
-                    <li class="list-group-item" style="margin-top:10px;">
-                        <p><strong>@item.CommenterName says</strong></p>
-                        <p>@item.Body</p>
-                        <p style="text-align: right;">
-                            @if (string.Equals(User.Identity.GetUserId(), item.CommenterId))
-                            {
-                                //show delete link
-                                <a href="/Comments/DeleteConfirmed/@item.CommentID" class="btn btn-default">Delete</a>
-                            }
-                        </p>
+            <li class="list-group-item" style="margin-top:10px;">
+                <p><strong>@item.CommenterName says</strong></p>
+                <p>@item.Body</p>
+                <p style="text-align: right;">
+                    @if (string.Equals(User.Identity.GetUserId(), item.CommenterId))
+                    {
+                        //show delete link
+                        <a href="/Comments/DeleteConfirmed/@item.CommentID" class="btn btn-default">Delete</a>
+                    }
+                </p>
+                @{
+                    var numDays = Math.Round((DateTime.Now - item.dop).TotalDays);
+                    var numHours = Math.Round((DateTime.Now - item.dop).TotalHours);
+                    var numMinutes = Math.Round((DateTime.Now - item.dop).TotalMinutes);
 
-                    </li>
+                }
+
+                @if (numDays < 1)
+                {
+                    if (numHours < 1)
+                    {
+                        <p style="text-align: right">@numMinutes minute(s) ago</p>
+                    }
+                    else
+                    {
+                        <p style="text-align: right">@numHours hour(s) ago</p>
+                    }
+                }
+                else
+                {
+                    <p style="text-align: right">@numDays day(s) ago</p>
+                }
+
+            </li>
 
                 }
             }
@@ -91,7 +116,7 @@
                     // Add the message to the page.
 
                     $('#discussion').append("<li class='list-group-item' style='margin-top: 10px;'><p><strong>" + htmlEncode(name)
-                        + ' says</p></strong><p>' + htmlEncode(message) + "</p><p style='text-align:right;'><button class='btn btn-default' id='delete -c'>Delete</button></p></li>");
+                        + ' says</p></strong><p>' + htmlEncode(message) + "</p><p style='text-align:right;'><button class='btn btn-default' id='delete -c'>Delete</button></p><p style='text-align: right'>Just Now</p></li>");
                 };
                 // Start the connection.
                 $.connection.hub.start().done(function () {

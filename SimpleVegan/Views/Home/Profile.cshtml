@@ -6,6 +6,9 @@
     ViewBag.Title = userName + " | " + "Profile";
 }
 
+<body style="background-color:#eaedf2;">
+</body>
+
 <div class="row">
     <div class="col-md-12">
         <div class="jumbotron" style="background-color: deeppink; color: white;">
@@ -126,7 +129,7 @@
             <ul class="list-group">
                 @foreach (var item in Model.MyBookings)
                 {
-                <li class="list-group-item">
+                <li class="list-group-item" style="display: inline-block; margin-bottom: 10px;">
                     <h4>@item.Event.Title</h4>
                     <p>@item.Event.Description</p>
                     <p><strong>Venue: </strong> @item.Event.Venue</p>
@@ -147,9 +150,17 @@
             <div class="alert alert-info">You haven't made any!</div>
         }
         <ul class="list-group">
-            @foreach (var item in Model.MyComments) {
+            @foreach (var item in Model.MyComments)
+            {
                 <li class="list-group-item">
-                    <p><strong>@item.BlogPost.Title -by @item.BlogPost.Member.FirstName</strong></p>
+                    @{ 
+                        var Uid = item.BlogPost.Member.userId;
+                        var Uname = "Yourself";
+                        if (!string.Equals(Uid, User.Identity.GetUserId())) {
+                            Uname = item.BlogPost.Member.FirstName;
+                        }
+                    }
+                    <p><strong>@item.BlogPost.Title -by @Uname</strong></p>
                     <p>Comment: "@item.Body"</p>
                 </li>
             }
