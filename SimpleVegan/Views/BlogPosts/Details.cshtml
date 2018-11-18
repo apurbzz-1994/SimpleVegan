@@ -1,11 +1,12 @@
 ﻿@model SimpleVegan.Models.BlogPost
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @using Microsoft.AspNet.Identity;
+
 
 
 <body style="background-color:#eaedf2;">
@@ -64,6 +65,7 @@
                 <p style="text-align: right;">
                     @if (string.Equals(User.Identity.GetUserId(), item.CommenterId))
                     {
+                     
                         //show delete link
                         <a href="/Comments/DeleteConfirmed/@item.CommentID" class="btn btn-default">Delete</a>
                     }
@@ -116,7 +118,7 @@
                     // Add the message to the page.
 
                     $('#discussion').append("<li class='list-group-item' style='margin-top: 10px;'><p><strong>" + htmlEncode(name)
-                        + ' says</p></strong><p>' + htmlEncode(message) + "</p><p style='text-align:right;'><button class='btn btn-default' id='delete -c'>Delete</button></p><p style='text-align: right'>Just Now</p></li>");
+                        + ' says</p></strong><p>' + htmlEncode(message) + "</p><p style='text-align:right;'><a href='#' class='btn btn-default'>Delete</a></p><p style='text-align: right'>Just Now</p></li>");
                 };
                 // Start the connection.
                 $.connection.hub.start().done(function () {

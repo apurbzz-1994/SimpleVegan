@@ -22,6 +22,10 @@
                 {
                     <p> @Html.ActionLink("Post a Blog", "Create", "BlogPosts", new { area = "" }, new { @class = "btn btn-default btn-lg" })</p>
                 }
+                else
+                {
+                    <p style="color: white"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Login to post a blog</p>
+                }
             </div>
         </div>
     </div>
