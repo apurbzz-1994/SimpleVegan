@@ -1,6 +1,7 @@
 # Simple Vegan Website
 
-#### Technologies used: ASP.NET, C#, JavaScript, ASP.NET Entity Framework, SignalR, Bootstrap
+A concept website that facilitates vegan individuals to connect with the vegan community.
+Technologies used: ASP.NET, C#, JavaScript, ASP.NET Entity Framework, SignalR, Bootstrap
 
 ### Concept
 
@@ -13,3 +14,7 @@ In this spirit, Simple Vegan is a platform that is aimed towards facilitating th
 * A blog where registered members can write about their vegan experiences, tips, reviews and recommendations. The blog also features a real-time comments section.
 
 Detailed documentation can be found [here](https://www.linkedin.com/pulse/developing-concept-website-people-starting-out-vegan-diet-apurba-nath/ "Simple Vegan Documentation").
+
+![](main_img.gif)
+![](event.gif)
+![](blog.gif)
